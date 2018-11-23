@@ -1311,6 +1311,21 @@ public class JsonASTVisitor extends ASTVisitor {
                         continue; // handled in serializeIncludes
                     }
 
+                    if (stmt instanceof IASTPreprocessorMacroDefinition) {
+                        IASTPreprocessorMacroDefinition s = (IASTPreprocessorMacroDefinition)stmt;
+                        json.writeStringField("Name", s.getName().toString());
+                        json.writeBooleanField("IsActive", s.isActive());
+                        json.writeStringField("Expansion", s.getExpansion());
+
+                        json.writeFieldName("ExpansionPosition");
+                        json.writeStartObject();
+                        try {
+                            serializeLocation(s.getExpansionLocation());
+                        } finally {
+                            json.writeEndObject();
+                        }
+                    }
+
                     if (stmt instanceof IASTPreprocessorIfStatement) {
                         IASTPreprocessorIfStatement s = (IASTPreprocessorIfStatement)stmt;
                         json.writeStringField("Condition", new String(s.getCondition()));
@@ -1336,12 +1351,8 @@ public class JsonASTVisitor extends ASTVisitor {
                         IASTPreprocessorErrorStatement s = (IASTPreprocessorErrorStatement)stmt;
                         json.writeStringField("ErrorMsg", new String(s.getMessage()));
                     } else if (stmt instanceof IASTPreprocessorFunctionStyleMacroDefinition) {
-                        // FIXME XXX: handle getExpansion & getExpansionLocation
                         IASTPreprocessorFunctionStyleMacroDefinition s = (IASTPreprocessorFunctionStyleMacroDefinition)stmt;
                         IASTFunctionStyleMacroParameter[] params = s.getParameters();
-                        json.writeStringField("Name", s.getName().toString());
-                        json.writeBooleanField("IsActive", s.isActive());
-                        json.writeStringField("Expansion", s.getExpansion());
                         json.writeFieldName("Parameters");
                         json.writeStartArray();
                         try {
@@ -1352,13 +1363,14 @@ public class JsonASTVisitor extends ASTVisitor {
                             json.writeEndArray();
                         }
 
-                        json.writeFieldName("ExpansionPosition");
-                        json.writeStartObject();
-                        try {
-                            serializeLocation(s.getExpansionLocation());
-                        } finally {
-                            json.writeEndObject();
-                        }
+                    } else if (stmt instanceof IASTPreprocessorPragmaStatement) {
+                        IASTPreprocessorPragmaStatement s = (IASTPreprocessorPragmaStatement)stmt;
+                        json.writeStringField("Message", new String(s.getMessage()));
+                        json.writeBooleanField("IsPragmaOperator", s.isPragmaOperator());
+                    } else if (stmt instanceof IASTPreprocessorUndefStatement) {
+                        IASTPreprocessorUndefStatement s = (IASTPreprocessorUndefStatement)stmt;
+                        json.writeStringField("Name", s.getMacroName().toString());
+                        json.writeBooleanField("IsActive", s.isActive());
                     }
 
                 } finally {

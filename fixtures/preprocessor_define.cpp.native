@@ -100,9 +100,16 @@
    'Prop_MacroExpansions': [],
    'Prop_PreprocStatements': [
       {
+         Expansion: "false",
+         ExpansionPosition: {
+            LocOffsetEnd: 18,
+            LocOffsetStart: 13,
+         },
          IASTClass: "ASTMacroDefinition",
+         IsActive: true,
          LocOffsetEnd: 18,
          LocOffsetStart: 0,
+         Name: "true",
       },
    ],
 }

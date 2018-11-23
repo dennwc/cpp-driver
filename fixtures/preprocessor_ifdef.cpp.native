@@ -199,14 +199,28 @@
    'Prop_MacroDefinitions': [],
    'Prop_PreprocStatements': [
       {
+         Expansion: "1",
+         ExpansionPosition: {
+            LocOffsetEnd: 13,
+            LocOffsetStart: 12,
+         },
          IASTClass: "ASTMacroDefinition",
+         IsActive: true,
          LocOffsetEnd: 13,
          LocOffsetStart: 0,
+         Name: "FOO",
       },
       {
+         Expansion: "10",
+         ExpansionPosition: {
+            LocOffsetEnd: 28,
+            LocOffsetStart: 26,
+         },
          IASTClass: "ASTMacroDefinition",
+         IsActive: true,
          LocOffsetEnd: 28,
          LocOffsetStart: 14,
+         Name: "BAR",
       },
       {
          Condition: "FOO",
@@ -217,9 +231,16 @@
          MacroReference: "FOO",
       },
       {
+         Expansion: "",
+         ExpansionPosition: {
+            LocOffsetEnd: 54,
+            LocOffsetStart: 54,
+         },
          IASTClass: "ASTMacroDefinition",
+         IsActive: true,
          LocOffsetEnd: 54,
          LocOffsetStart: 43,
+         Name: "BAZ",
       },
       {
          Condition: "BAR>5",
