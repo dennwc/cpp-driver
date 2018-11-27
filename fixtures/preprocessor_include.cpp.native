@@ -3,7 +3,7 @@
    LocOffsetEnd: 45,
    LocOffsetStart: 0,
    'Prop_BuiltinMacroDefinitions': [],
-   'Prop_Includes': [
+   'Prop_PreprocStatements': [
       {
          IASTClass: "ASTInclusionStatement",
          IsSystem: true,
@@ -21,18 +21,6 @@
          Name: "foo/bar/baz.h",
          Path: "",
          Resolved: false,
-      },
-   ],
-   'Prop_PreprocStatements': [
-      {
-         IASTClass: "ASTInclusionStatement",
-         LocOffsetEnd: 19,
-         LocOffsetStart: 0,
-      },
-      {
-         IASTClass: "ASTInclusionStatement",
-         LocOffsetEnd: 44,
-         LocOffsetStart: 20,
       },
    ],
    'Prop_PreprocessorProblems': [],
