@@ -1,8 +1,8 @@
 #include <iostream>
 
-#define join(a,b) a ## b
+#define JOIN(a,b) a ## b
 
 int main() {
-  join(std::c, out) << "test";
-  int a = join(3, 4);
+  JOIN(std::c, out) << "test";
+  int a = JOIN(3, 4);
 }

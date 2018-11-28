@@ -80,13 +80,13 @@ public class JsonASTVisitor extends ASTVisitor {
         private List<MacroExpansionLocation> macroExpansions;
         // Used to reparent macro expansions as children of macroDefinitions since they're
         // separate lists on CDT.
-        private Hashtable<IASTPreprocessorMacroDefinition, IASTNodeLocation[]> macroDef2Locations;
+        private Hashtable<IASTPreprocessorMacroDefinition, Vector<IASTNodeLocation>> macroDef2Locations;
         private int firstStartOffset;
         private int lastEndOffset;
 
         MacroExpansionContainer()
         {
-            macroDef2Locations = new Hashtable<IASTPreprocessorMacroDefinition, IASTNodeLocation[]>();
+            macroDef2Locations = new Hashtable<IASTPreprocessorMacroDefinition, Vector<IASTNodeLocation>>();
             macroExpansions = new Vector<MacroExpansionLocation>();
         }
 
@@ -100,28 +100,34 @@ public class JsonASTVisitor extends ASTVisitor {
         public void add(IASTPreprocessorMacroExpansion exp)
         {
             IASTPreprocessorMacroDefinition	def = exp.getMacroDefinition();
-            IASTNodeLocation[] expLocations = exp.getNodeLocations();
-            macroDef2Locations.put(def, expLocations);
-            int locOrd = 1;
+            Vector<IASTNodeLocation> expLocations = new Vector<IASTNodeLocation>(Arrays.asList(exp.getNodeLocations()));
+            Vector<IASTNodeLocation> prevLocations = macroDef2Locations.get(def);
+
+            if (prevLocations == null) {
+                macroDef2Locations.put(def, expLocations);
+            } else {
+                prevLocations.addAll(expLocations);
+            }
 
             for (IASTNodeLocation expLoc : expLocations) {
                 IASTFileLocation defLoc = def.getFileLocation();
+                if (defLoc == null)
+                    continue;
+
                 int defStartOffset = defLoc.getNodeOffset();
 
                 String macroCodename = def.getName().toString() + "_" +
                     String.valueOf(defStartOffset) + ":" +
-                    String.valueOf(defStartOffset + defLoc.getNodeLength()) +
-                    "_" + String.valueOf(locOrd);
+                    String.valueOf(defStartOffset + defLoc.getNodeLength());
 
 
                 int expStartOffset = expLoc.getNodeOffset();
                 addSingleExpansion(macroCodename, expStartOffset,
                                    expStartOffset + expLoc.getNodeLength());
-                ++locOrd;
             }
         }
 
-        public IASTNodeLocation[] getMacroDefLocations(IASTPreprocessorMacroDefinition def)
+        public Vector<IASTNodeLocation> getMacroDefLocations(IASTPreprocessorMacroDefinition def)
         {
             return macroDef2Locations.get(def);
         }
@@ -141,13 +147,14 @@ public class JsonASTVisitor extends ASTVisitor {
         public String checkFromExpansion(IASTNode node)
         {
             IASTFileLocation loc = node.getFileLocation();
-            int nodeStart = loc.getNodeOffset();
+            if (loc == null)
+                return null;
 
+            int nodeStart = loc.getNodeOffset();
             if (nodeStart < firstStartOffset)
                 return null;
 
             int nodeEnd = nodeStart + loc.getNodeLength();
-
             if (nodeEnd > lastEndOffset)
                 return null;
 
@@ -270,6 +277,14 @@ public class JsonASTVisitor extends ASTVisitor {
             ASTNodeProperty propInParent = node.getPropertyInParent();
             if (propInParent != null) {
                 json.writeStringField("Role", propInParent.getName());
+            }
+        }
+
+        // Check if the node resulted from a macro expansion
+        if (!(node instanceof IASTPreprocessorStatement)) {
+            String expandedMacro = macroExpansionContainer.checkFromExpansion(node);
+            if (expandedMacro != null) {
+                json.writeStringField("ExpandedFromMacro", expandedMacro);
             }
         }
 
@@ -699,11 +714,14 @@ public class JsonASTVisitor extends ASTVisitor {
                 String exprType = node.getExpressionType().toString();
 
                 if (exprType.indexOf("ProblemType@") != -1) {
+                    // Disabled until we visit problem nodes since it doesnt provide any
+                    // information
+                    exprType = "";
                     // Trying to get the type of some untyped expressions give something like:
                     // org.eclipse.cdt.internal.core.dom.parser.ProblemType@50a638b5
                     // The last part is variable so integration tests will fail (and
                     // it doesn't give any information) so we remove it
-                    exprType = "org.eclipse.cdt.internal.core.dom.parser.ProblemType";
+                    //exprType = "org.eclipse.cdt.internal.core.dom.parser.ProblemType";
                 } else if (exprType.indexOf("TypeParameter@") != -1) { // ditto
                     exprType = "org.eclipse.cdt.internal.core.dom.parser.cpp.CPPImplicitTTemplateTypeParameter";
                 }
@@ -1077,7 +1095,6 @@ public class JsonASTVisitor extends ASTVisitor {
 
             json.writeStartObject();
             try {
-
                 serializeCommonData(node);
                 writeIfTrue("IsConst", node.isConst());
                 writeIfTrue("IsInline", node.isInline());
@@ -1422,7 +1439,7 @@ public class JsonASTVisitor extends ASTVisitor {
                             json.writeEndObject();
                         }
 
-                        IASTNodeLocation[] expLocs = macroExpansionContainer.getMacroDefLocations(s);
+                        Vector<IASTNodeLocation> expLocs = macroExpansionContainer.getMacroDefLocations(s);
 
                         if (expLocs != null) {
                             json.writeFieldName("Prop_Expansions");
@@ -1442,8 +1459,6 @@ public class JsonASTVisitor extends ASTVisitor {
                                 json.writeEndArray();
                             }
                         }
-
-                        // TODO: serialize macro expansion positions
                     }
 
                     if (stmt instanceof IASTPreprocessorIfStatement) {
