@@ -678,7 +678,7 @@ public class JsonASTVisitor extends ASTVisitor {
             try {
                 serializeCommonData(node);
                 json.writeStringField("Name", node.toString());
-                writeIfTrue("IsQualified", node.isQualified());
+                json.writeBooleanField("IsQualified", node.isQualified());
 
                 if (shouldVisitImplicitNames && node instanceof IASTImplicitName) {
                     IASTImplicitName impl = (IASTImplicitName) node;
@@ -888,10 +888,10 @@ public class JsonASTVisitor extends ASTVisitor {
                 serializeCommonData(node);
                 if (node instanceof ICASTArrayModifier) {
                     ICASTArrayModifier carr = (ICASTArrayModifier) node;
-                    writeIfTrue("IsConst", carr.isConst());
-                    writeIfTrue("IsRestrict", carr.isRestrict());
-                    writeIfTrue("IsStatic", carr.isStatic());
-                    writeIfTrue("IsVolatile", carr.isVolatile());
+                    json.writeBooleanField("IsConst", carr.isConst());
+                    json.writeBooleanField("IsRestrict", carr.isRestrict());
+                    json.writeBooleanField("IsStatic", carr.isStatic());
+                    json.writeBooleanField("IsVolatile", carr.isVolatile());
                 }
                 serializeComments(node);
                 visitChildren(node);
@@ -1026,11 +1026,12 @@ public class JsonASTVisitor extends ASTVisitor {
         return PROCESS_SKIP;
     }
 
-    private void writeIfTrue(String name, boolean field) throws IOException {
-        if (field) {
-            json.writeBooleanField(name, true);
-        }
-    }
+    // FIXME: remove if we don't use it at the end
+    //private void writeIfTrue(String name, boolean field) throws IOException {
+        //if (field) {
+            //json.writeBooleanField(name, true);
+        //}
+    //}
 
     @Override
     public int visit(IASTDeclarator node) {
@@ -1045,12 +1046,12 @@ public class JsonASTVisitor extends ASTVisitor {
 
                     if (node instanceof ICPPASTFunctionDeclarator) {
                         ICPPASTFunctionDeclarator impl2 = (ICPPASTFunctionDeclarator) node;
-                        writeIfTrue("IsConst", impl2.isConst());
-                        writeIfTrue("IsFinal", impl2.isFinal());
-                        writeIfTrue("IsMutable", impl2.isMutable());
-                        writeIfTrue("IsOverride", impl2.isOverride());
-                        writeIfTrue("IsPureVirtual", impl2.isPureVirtual());
-                        writeIfTrue("IsVolatile", impl2.isVolatile());
+                        json.writeBooleanField("IsConst", impl2.isConst());
+                        json.writeBooleanField("IsFinal", impl2.isFinal());
+                        json.writeBooleanField("IsMutable", impl2.isMutable());
+                        json.writeBooleanField("IsOverride", impl2.isOverride());
+                        json.writeBooleanField("IsPureVirtual", impl2.isPureVirtual());
+                        json.writeBooleanField("IsVolatile", impl2.isVolatile());
                     }
                 }
 
@@ -1096,10 +1097,10 @@ public class JsonASTVisitor extends ASTVisitor {
             json.writeStartObject();
             try {
                 serializeCommonData(node);
-                writeIfTrue("IsConst", node.isConst());
-                writeIfTrue("IsInline", node.isInline());
-                writeIfTrue("IsRestrict", node.isRestrict());
-                writeIfTrue("IsVolatile", node.isVolatile());
+                json.writeBooleanField("IsConst", node.isConst());
+                json.writeBooleanField("IsInline", node.isInline());
+                json.writeBooleanField("IsRestrict", node.isRestrict());
+                json.writeBooleanField("IsVolatile", node.isVolatile());
 
                 String stStr;
                 switch (node.getStorageClass()) {
@@ -1130,11 +1131,11 @@ public class JsonASTVisitor extends ASTVisitor {
 
                 if (node instanceof ICPPASTDeclSpecifier) {
                     ICPPASTDeclSpecifier impl = (ICPPASTDeclSpecifier) node;
-                    writeIfTrue("IsConstExpr", impl.isConstexpr());
-                    writeIfTrue("IsExplicit", impl.isExplicit());
-                    writeIfTrue("IsFriend", impl.isFriend());
-                    writeIfTrue("IsThreadLocal", impl.isThreadLocal());
-                    writeIfTrue("IsVirtual", impl.isVirtual());
+                    json.writeBooleanField("IsConstExpr", impl.isConstexpr());
+                    json.writeBooleanField("IsExplicit", impl.isExplicit());
+                    json.writeBooleanField("IsFriend", impl.isFriend());
+                    json.writeBooleanField("IsThreadLocal", impl.isThreadLocal());
+                    json.writeBooleanField("IsVirtual", impl.isVirtual());
                 }
 
                 if (node instanceof IASTCompositeTypeSpecifier) {
@@ -1197,13 +1198,13 @@ public class JsonASTVisitor extends ASTVisitor {
 
                 if (node instanceof IASTSimpleDeclSpecifier) {
                     IASTSimpleDeclSpecifier impl = (IASTSimpleDeclSpecifier) node;
-                    writeIfTrue("IsComplex", impl.isComplex());
-                    writeIfTrue("IsImaginary", impl.isImaginary());
-                    writeIfTrue("IsLong", impl.isLong());
-                    writeIfTrue("IsLongLong", impl.isLongLong());
-                    writeIfTrue("IsShort", impl.isShort());
-                    writeIfTrue("IsSigned", impl.isSigned());
-                    writeIfTrue("IsUnsigned", impl.isUnsigned());
+                    json.writeBooleanField("IsComplex", impl.isComplex());
+                    json.writeBooleanField("IsImaginary", impl.isImaginary());
+                    json.writeBooleanField("IsLong", impl.isLong());
+                    json.writeBooleanField("IsLongLong", impl.isLongLong());
+                    json.writeBooleanField("IsShort", impl.isShort());
+                    json.writeBooleanField("IsSigned", impl.isSigned());
+                    json.writeBooleanField("IsUnsigned", impl.isUnsigned());
 
                     String typeStr;
 
@@ -1328,9 +1329,9 @@ public class JsonASTVisitor extends ASTVisitor {
 
                 if (node instanceof IASTPointer) {
                     IASTPointer impl = (IASTPointer) node;
-                    writeIfTrue("IsConst", impl.isConst());
-                    writeIfTrue("IsRestrict", impl.isRestrict());
-                    writeIfTrue("IsVolatile", impl.isVolatile());
+                    json.writeBooleanField("IsConst", impl.isConst());
+                    json.writeBooleanField("IsRestrict", impl.isRestrict());
+                    json.writeBooleanField("IsVolatile", impl.isVolatile());
 
                     if (node instanceof ICPPASTPointerToMember) {
                         ICPPASTPointerToMember impl2 = (ICPPASTPointerToMember) node;

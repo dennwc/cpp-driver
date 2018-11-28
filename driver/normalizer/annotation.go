@@ -136,16 +136,22 @@ var Annotations = []Mapping{
 	Map(Obj{
 		"IASTClass": String("CPPASTName"),
 		"Name": String(""),
+		"IsQualified": Var("isqual"),
 	}, Obj{
 		uast.KeyType: String("CPPASTName"),
 		uast.KeyRoles: Roles(role.Identifier),
 		uast.KeyToken: String(""),
+		"IsQualified": Var("isqual"),
 	}),
 
-	AnnotateType("CPPASTName", FieldRoles{"Name": {Rename: uast.KeyToken}}, role.Identifier),
+	AnnotateType("CPPASTName", FieldRoles{
+		"Name": {Rename: uast.KeyToken},
+	}, role.Identifier),
+
+	AnnotateType("CPPASTImplicitName", FieldRoles{
+		"Name": {Rename: uast.KeyToken},
+	}, role.Identifier),
 	AnnotateType("ASTInclusionStatement", FieldRoles{"Name": {Rename: uast.KeyToken}}, role.Import),
-	AnnotateType("CPPASTImplicitName", FieldRoles{"Name": {Rename: uast.KeyToken}},
-		role.Identifier),
 
 	AnnotateType("CPPASTIdExpression", nil, role.Expression, role.Variable),
 	AnnotateType("CPPASTNullStatement", nil, role.Literal, role.Null, role.Expression,

@@ -112,6 +112,7 @@
                                     },
                                     IsConversionOperator: false,
                                     IsFullyQualified: false,
+                                    IsQualified: false,
                                     Name: "std::cout",
                                     'Prop_AllSegments': [
                                        { '@type': "uast:Identifier",
