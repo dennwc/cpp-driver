@@ -33,8 +33,8 @@ var Normalizers = []Mapping{
 			"Name": Var("path"),
 		},
 		Obj{
-			"Path": UASTType(uast.Identifier{}, Obj{"Name": Var("path")}),
-			"All": Bool(true),
+			"Path":  UASTType(uast.Identifier{}, Obj{"Name": Var("path")}),
+			"All":   Bool(true),
 			"Names": Arr(),
 		},
 	)),
@@ -83,17 +83,17 @@ var Normalizers = []Mapping{
 
 	// Args in C can have type but be empty (typically in headers, but also in implementations): int main(int, char**)
 	Map(Obj{
-		"IASTClass": String("CPPASTName"),
-		"Name": String(""),
+		"IASTClass":   String("CPPASTName"),
+		"Name":        String(""),
 		"IsQualified": Var("ignIsQual"),
 	}, Obj{
 		uast.KeyType: String("uast:Identifier"),
-		"Name": String(""),
+		"Name":       String(""),
 	}),
 
 	MapSemantic("CPPASTName", uast.Identifier{}, MapObj(
 		Obj{
-			"Name": Var("name"),
+			"Name":        Var("name"),
 			"IsQualified": Var("ignIsQual"),
 		},
 		Obj{
@@ -103,9 +103,9 @@ var Normalizers = []Mapping{
 
 	MapSemantic("CPPASTImplicitName", uast.Identifier{}, MapObj(
 		Obj{
-			"Name": Var("name"),
-			"IsQualified": Var("ignIsQual"),
-			"IsAlternate": Var("ignIsAlternate"),
+			"Name":                 Var("name"),
+			"IsQualified":          Var("ignIsQual"),
+			"IsAlternate":          Var("ignIsAlternate"),
 			"IsOverloadedOperator": Var("ignIsOver"),
 		},
 		Obj{
