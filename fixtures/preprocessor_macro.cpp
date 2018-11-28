@@ -4,4 +4,5 @@
 
 int main() {
   join(std::c, out) << "test";
+  int a = join(3, 4);
 }

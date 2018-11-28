@@ -1,6 +1,6 @@
 {
    IASTClass: "CPPASTTranslationUnit",
-   LocOffsetEnd: 93,
+   LocOffsetEnd: 115,
    LocOffsetStart: 0,
    'Prop_BuiltinMacroDefinitions': [],
    'Prop_Declarations': [
@@ -8,11 +8,11 @@
          IASTClass: "CPPASTFunctionDefinition",
          IsDefaulted: false,
          IsDeleted: false,
-         LocOffsetEnd: 92,
+         LocOffsetEnd: 114,
          LocOffsetStart: 47,
          'Prop_Body': {
             IASTClass: "CPPASTCompoundStatement",
-            LocOffsetEnd: 92,
+            LocOffsetEnd: 114,
             LocOffsetStart: 58,
             'Prop_Statements': [
                {
@@ -88,6 +88,63 @@
                      },
                   },
                },
+               {
+                  IASTClass: "CPPASTDeclarationStatement",
+                  LocOffsetEnd: 112,
+                  LocOffsetStart: 93,
+                  'Prop_Declaration': {
+                     IASTClass: "CPPASTSimpleDeclaration",
+                     LocOffsetEnd: 112,
+                     LocOffsetStart: 93,
+                     'Prop_DeclSpecifier': {
+                        IASTClass: "CPPASTSimpleDeclSpecifier",
+                        LocOffsetEnd: 96,
+                        LocOffsetStart: 93,
+                        StorageClass: "unspecified",
+                        Type: "int",
+                     },
+                     'Prop_Declarators': [
+                        {
+                           DeclaresParameterPack: false,
+                           IASTClass: "CPPASTDeclarator",
+                           LocOffsetEnd: 111,
+                           LocOffsetStart: 97,
+                           'Prop_Initializer': {
+                              IASTClass: "CPPASTEqualsInitializer",
+                              LocOffsetEnd: 111,
+                              LocOffsetStart: 99,
+                              'Prop_Expression': {
+                                 ExpressionType: "int",
+                                 ExpressionValueCategory: "PRVALUE",
+                                 IASTClass: "CPPASTLiteralExpression",
+                                 IsLValue: false,
+                                 LiteralValue: "34",
+                                 LocOffsetEnd: 111,
+                                 LocOffsetStart: 101,
+                                 kind: "integer_constant",
+                              },
+                              'Prop_InitializerClause': {
+                                 ExpressionType: "int",
+                                 ExpressionValueCategory: "PRVALUE",
+                                 IASTClass: "CPPASTLiteralExpression",
+                                 IsLValue: false,
+                                 LiteralValue: "34",
+                                 LocOffsetEnd: 111,
+                                 LocOffsetStart: 101,
+                                 kind: "integer_constant",
+                              },
+                           },
+                           'Prop_Name': {
+                              IASTClass: "CPPASTName",
+                              LocOffsetEnd: 98,
+                              LocOffsetStart: 97,
+                              Name: "a",
+                           },
+                           'Prop_TypeNode': ~,
+                        },
+                     ],
+                  },
+               },
             ],
          },
          'Prop_DeclSpecifier': {
@@ -132,8 +189,8 @@
          'Prop_Expansions': [
             {
                IASTClass: "ExpansionLocation",
-               LocOffsetEnd: 79,
-               LocOffsetStart: 62,
+               LocOffsetEnd: 111,
+               LocOffsetStart: 101,
             },
          ],
          'Prop_MacroBodyLocation': {
