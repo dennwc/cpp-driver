@@ -141,7 +141,6 @@ var Normalizers = []Mapping{
 					{Name: uast.KeyType, Op: Var("ignTypeRet")},
 					{Name: uast.KeyPos, Op: Var("ignPosRet")},
 					//{Name: "IsTypeName", Op: Var("ignIsTypeName")},
-					{Name: "StorageClass", Op: Var("StorageClass")},
 					{Name: "IsComplex", Optional: "optIsComplex", Op: Var("ignIsComplex")},
 					{Name: "IsConst", Optional: "optIsConst", Op: Var("ignIsConst")},
 					{Name: "IsConstExpr", Optional: "optIsConstExpr", Op: Var("ignIsConstExpr")},
@@ -158,6 +157,7 @@ var Normalizers = []Mapping{
 					{Name: "IsUnsigned", Optional: "optIsUnsigned", Op: Var("ignIsUnsigned")},
 					{Name: "IsVirtual", Optional: "optIsVirtual", Op: Var("ignIsVirtual")},
 					{Name: "IsVolatile", Optional: "optIsVol", Op: Var("ignIsVol")},
+					{Name: "StorageClass", Op: Var("StorageClass")},
 					{Name: "Type", Op: Var("retType")},
 				},
 				// NamedTypeSpecifier
@@ -203,14 +203,17 @@ var Normalizers = []Mapping{
 
 				{Name: "TakesVarArgs", Op: Cases("takesVarArgs", Bool(true), Bool(false))},
 				{Name: "Prop_ConstructorChain", Op: Var("ignConsChain"), Optional: "optConsChain"},
+				{Name: "Prop_PointerOperators", Optional: "optPointerOps", Op: Var("ignPointerOps")},
 
 				{Name: "Prop_Parameters", Optional: "optArgs", Op: Each("args", Fields{
-					{Name: uast.KeyType, Op: String("CPPASTDeclarator")},
+					{Name: uast.KeyType, Op: Var("ignParamType")},
 					{Name: uast.KeyPos, Op: Var("parampos")},
 					{Name: "Prop_Name", Op: Var("aname")},
 					{Name: "Prop_TypeNode", Op: Var("atype")},
 					{Name: "DeclaresParameterPack", Optional: "optParamPack", Op: Var("ignParamPack")},
-					{Name: "Prop_PointerOperators", Op: Var("ignPointerOps"), Optional: "optPointerOps"},
+					{Name: "Prop_Initializer", Optional: "optInitializer", Op: Var("ignInitializer")},
+					{Name: "Prop_PointerOperators", Optional: "optPointerOps", Op: Var("ignPointerOps2")},
+					{Name: "Prop_ArrayModifiers", Optional: "optArrayMod", Op: Var("ignArrayMod")},
 				})},
 			}},
 		},
