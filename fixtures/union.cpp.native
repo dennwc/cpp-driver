@@ -125,17 +125,6 @@
                            IASTClass: "CPPASTDeclarator",
                            LocOffsetEnd: 62,
                            LocOffsetStart: 61,
-                           'Prop_ImplicitNames': [
-                              {
-                                 IASTClass: "CPPASTImplicitName",
-                                 IsAlternate: false,
-                                 IsOverloadedOperator: false,
-                                 IsQualified: false,
-                                 LocOffsetEnd: 62,
-                                 LocOffsetStart: 61,
-                                 Name: "Record",
-                              },
-                           ],
                            'Prop_Name': {
                               IASTClass: "CPPASTName",
                               IsQualified: false,

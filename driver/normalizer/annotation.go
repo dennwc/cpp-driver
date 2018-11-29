@@ -242,12 +242,12 @@ var Annotations = []Mapping{
 		"Operator": Var("operator"),
 		"Prop_Operand1": ObjectRoles("operand1"),
 		"Prop_Operand2": ObjectRoles("operand2"),
-		// Temporarily using the same name to detect if those are really duplicated
-		"Prop_InitOperand2": ObjectRoles("operand2"),
+		"Prop_InitOperand2": ObjectRoles("init_operand2"),
 	}, Obj{
 		uast.KeyToken: Var("operator"),
 		"Prop_Operand1": ObjectRoles("operand1", role.Binary, role.Expression, role.Left),
 		"Prop_Operand2": ObjectRoles("operand2", role.Binary, role.Expression, role.Right),
+		"Prop_InitOperand2": ObjectRoles("init_operand2", role.Binary, role.Expression, role.Right),
 	}), LookupArrOpVar("operator", binaryExprRoles)),
 
 	AnnotateType("CPPASTEqualsInitializer", nil, role.Declaration, role.Assignment,

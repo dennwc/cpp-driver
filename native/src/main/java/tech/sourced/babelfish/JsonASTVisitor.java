@@ -222,7 +222,7 @@ public class JsonASTVisitor extends ASTVisitor {
         shouldVisitNames = true;
         shouldVisitNamespaces = true;
         shouldVisitParameterDeclarations = true;
-        shouldVisitImplicitNames = true;
+        shouldVisitImplicitNames = false;
         shouldVisitPointerOperators = false;
         shouldVisitStatements = true;
         shouldVisitTemplateParameters = true;
@@ -239,12 +239,11 @@ public class JsonASTVisitor extends ASTVisitor {
                     "getTrailingSyntax", "getSyntax", "getNodeLocations",
                     "getExecution", "getDependencyTree", "getLastName",
                     "getAlignmentSpecifiers", "getAdapter", "getTypeStringCache",
-                    "getProblem", "getRoleForName",
+                    "getProblem", "getRoleForName", "getImplicitNames",
                     // Called manually:
                     "getIncludeDirectives", "getAllPreprocessorStatements", "getMacroExpansions",
                     "getMacroDefinitions"
-                    // ImplicitNames
-                    //"getImplicitNames", "getFunctionCallOperatorName", "getClosureTypeName"
+                    //"getFunctionCallOperatorName", "getClosureTypeName"
         ));
         childrenMethodsCache = new Hashtable<String, Vector<ChildrenTypeCacheValue>>();
         macroExpansionContainer = new MacroExpansionContainer();
@@ -344,8 +343,10 @@ public class JsonASTVisitor extends ASTVisitor {
                 if (oChild == null || !(oChild instanceof IASTNode))
                     return;
 
-                json.writeFieldName(propertyName);
-                ((IASTNode)oChild).accept(this);
+                if (shouldVisitImplicitNames || !(oChild instanceof IASTImplicitName)) {
+                    json.writeFieldName(propertyName);
+                    ((IASTNode)oChild).accept(this);
+                }
             }
         } catch (IllegalAccessException e) {
             return;

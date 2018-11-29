@@ -355,17 +355,6 @@
                                     IsNewTypeId: true,
                                     LocOffsetEnd: 131,
                                     LocOffsetStart: 124,
-                                    'Prop_ImplicitNames': [
-                                       {
-                                          IASTClass: "CPPASTImplicitName",
-                                          IsAlternate: false,
-                                          IsOverloadedOperator: false,
-                                          IsQualified: false,
-                                          LocOffsetEnd: 131,
-                                          LocOffsetStart: 128,
-                                          Name: "Foo",
-                                       },
-                                    ],
                                     'Prop_TypeId': {
                                        IASTClass: "CPPASTTypeId",
                                        LocOffsetEnd: 131,
@@ -418,17 +407,6 @@
                                  IsNewTypeId: true,
                                  LocOffsetEnd: 131,
                                  LocOffsetStart: 124,
-                                 'Prop_ImplicitNames': [
-                                    {
-                                       IASTClass: "CPPASTImplicitName",
-                                       IsAlternate: false,
-                                       IsOverloadedOperator: false,
-                                       IsQualified: false,
-                                       LocOffsetEnd: 131,
-                                       LocOffsetStart: 128,
-                                       Name: "Foo",
-                                    },
-                                 ],
                                  'Prop_TypeId': {
                                     IASTClass: "CPPASTTypeId",
                                     LocOffsetEnd: 131,
@@ -549,17 +527,6 @@
                                        IsNewTypeId: true,
                                        LocOffsetEnd: 170,
                                        LocOffsetStart: 163,
-                                       'Prop_ImplicitNames': [
-                                          {
-                                             IASTClass: "CPPASTImplicitName",
-                                             IsAlternate: false,
-                                             IsOverloadedOperator: false,
-                                             IsQualified: false,
-                                             LocOffsetEnd: 170,
-                                             LocOffsetStart: 167,
-                                             Name: "Foo",
-                                          },
-                                       ],
                                        'Prop_TypeId': {
                                           IASTClass: "CPPASTTypeId",
                                           LocOffsetEnd: 170,
@@ -674,17 +641,6 @@
                                        IsNewTypeId: true,
                                        LocOffsetEnd: 170,
                                        LocOffsetStart: 163,
-                                       'Prop_ImplicitNames': [
-                                          {
-                                             IASTClass: "CPPASTImplicitName",
-                                             IsAlternate: false,
-                                             IsOverloadedOperator: false,
-                                             IsQualified: false,
-                                             LocOffsetEnd: 170,
-                                             LocOffsetStart: 167,
-                                             Name: "Foo",
-                                          },
-                                       ],
                                        'Prop_TypeId': {
                                           IASTClass: "CPPASTTypeId",
                                           LocOffsetEnd: 170,
@@ -754,17 +710,6 @@
                                        IsNewTypeId: true,
                                        LocOffsetEnd: 170,
                                        LocOffsetStart: 163,
-                                       'Prop_ImplicitNames': [
-                                          {
-                                             IASTClass: "CPPASTImplicitName",
-                                             IsAlternate: false,
-                                             IsOverloadedOperator: false,
-                                             IsQualified: false,
-                                             LocOffsetEnd: 170,
-                                             LocOffsetStart: 167,
-                                             Name: "Foo",
-                                          },
-                                       ],
                                        'Prop_TypeId': {
                                           IASTClass: "CPPASTTypeId",
                                           LocOffsetEnd: 170,
@@ -849,17 +794,6 @@
                                        IsNewTypeId: true,
                                        LocOffsetEnd: 170,
                                        LocOffsetStart: 163,
-                                       'Prop_ImplicitNames': [
-                                          {
-                                             IASTClass: "CPPASTImplicitName",
-                                             IsAlternate: false,
-                                             IsOverloadedOperator: false,
-                                             IsQualified: false,
-                                             LocOffsetEnd: 170,
-                                             LocOffsetStart: 167,
-                                             Name: "Foo",
-                                          },
-                                       ],
                                        'Prop_TypeId': {
                                           IASTClass: "CPPASTTypeId",
                                           LocOffsetEnd: 170,
