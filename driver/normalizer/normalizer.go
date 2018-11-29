@@ -199,7 +199,7 @@ var Normalizers = []Mapping{
 					{Name: "Name", Op: Var("name")},
 				}},
 
-				{Name: "TakesVarArgs", Op: Cases("takesVarArgs", Bool(true), Bool(false))},
+				{Name: "TakesVarArgs", Op: Cases("takesVarArgs", Bool(false), Bool(true))},
 				{Name: "Prop_ConstructorChain", Op: Var("ignConsChain"), Optional: "optConsChain"},
 				{Name: "Prop_PointerOperators", Optional: "optPointerOps", Op: Var("ignPointerOps")},
 
@@ -242,30 +242,26 @@ var Normalizers = []Mapping{
 							)))},
 
 							{Name: "Arguments", Optional: "optArgs", Op: Cases("takesVarArgs",
-								// True, append a synthetic arg with Name = "..." and Variadic = true
-								// FIXME: commented code doesnt work
-								Each("args", UASTType(uast.Argument{}, Obj{
-									"Name": Var("aname"),
-									"Type": Var("atype"),
-									"Init": If("optInitializer", Var("ainit"), Is(nil)),
-								})),
-								//Append(
-								//	UASTType(uast.Argument{}, Obj{
-								//		"Name":     UASTType(uast.Identifier{}, Obj{ "Name": String("...")}),
-								//		"Variadic": Bool(true),
-								//	}),
-								//	Arr(Each("args", UASTType(uast.Argument{}, Obj{
-								//		"Name": Var("aname"),
-								//		"Type": Var("atype"),
-								//	}))),
-								//),
 								// False, no varargs
 								Each("args", UASTType(uast.Argument{}, Obj{
 									"Name": Var("aname"),
 									"Type": Var("atype"),
 									"Init": If("optInitializer", Var("ainit"), Is(nil)),
-								}))),
-							},
+								})),
+								// True, the last arg is variadic
+								Append(
+									Each("args", UASTType(uast.Argument{}, Obj{
+										"Name": Var("aname"),
+										"Type": Var("atype"),
+										"Init": If("optInitializer", Var("ainit"), Is(nil)),
+									})),
+									Arr(
+										UASTType(uast.Argument{}, Obj{
+											"Variadic": Bool(true),
+										}),
+									),
+								),
+							)},
 						})},
 					}),
 				}),
