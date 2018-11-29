@@ -140,7 +140,6 @@ var Normalizers = []Mapping{
 				Fields{
 					{Name: uast.KeyType, Op: Var("ignTypeRet")},
 					{Name: uast.KeyPos, Op: Var("ignPosRet")},
-					//{Name: "IsTypeName", Op: Var("ignIsTypeName")},
 					{Name: "IsComplex", Optional: "optIsComplex", Op: Var("ignIsComplex")},
 					{Name: "IsConst", Optional: "optIsConst", Op: Var("ignIsConst")},
 					{Name: "IsConstExpr", Optional: "optIsConstExpr", Op: Var("ignIsConstExpr")},
@@ -164,7 +163,6 @@ var Normalizers = []Mapping{
 				Fields{
 					{Name: uast.KeyType, Op: Var("ignTypeRet")},
 					{Name: uast.KeyPos, Op: Var("ignPosRet")},
-					//{Name: "IsTypeName", Op: Var("ignIsTypeName")},
 					{Name: "StorageClass", Op: Var("StorageClass")},
 					{Name: "IsConst", Optional: "optIsConst", Op: Var("ignIsConst")},
 					{Name: "IsConstExpr", Optional: "optIsConstExpr", Op: Var("ignIsConstExpr")},
@@ -211,7 +209,7 @@ var Normalizers = []Mapping{
 					{Name: "Prop_Name", Op: Var("aname")},
 					{Name: "Prop_TypeNode", Op: Var("atype")},
 					{Name: "DeclaresParameterPack", Optional: "optParamPack", Op: Var("ignParamPack")},
-					{Name: "Prop_Initializer", Optional: "optInitializer", Op: Var("ignInitializer")},
+					{Name: "Prop_Initializer", Optional: "optInitializer", Op: Var("ainit")},
 					{Name: "Prop_PointerOperators", Optional: "optPointerOps", Op: Var("ignPointerOps2")},
 					{Name: "Prop_ArrayModifiers", Optional: "optArrayMod", Op: Var("ignArrayMod")},
 				})},
@@ -249,6 +247,7 @@ var Normalizers = []Mapping{
 								Each("args", UASTType(uast.Argument{}, Obj{
 									"Name": Var("aname"),
 									"Type": Var("atype"),
+									"Init": If("optInitializer", Var("ainit"), Is(nil)),
 								})),
 								//Append(
 								//	UASTType(uast.Argument{}, Obj{
@@ -264,6 +263,7 @@ var Normalizers = []Mapping{
 								Each("args", UASTType(uast.Argument{}, Obj{
 									"Name": Var("aname"),
 									"Type": Var("atype"),
+									"Init": If("optInitializer", Var("ainit"), Is(nil)),
 								}))),
 							},
 						})},
